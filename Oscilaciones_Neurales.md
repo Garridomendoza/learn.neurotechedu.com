@@ -1,4 +1,4 @@
-#### Oscilaciones neurales.
+# Oscilaciones neurales.
 Este tutorial sirve de introducción al ejercicio de extracción de oscilaciones neurales desde datos electroencefalográficos (EEG). Esta introducción requiere un conocimiento básico de Python y MNE para el análisis de datos de EEG. 
 
 # ¿Qué son las oscilaciones neurales?
@@ -49,14 +49,14 @@ Antes de extraer oscilaciones neurales, hay varios pasos que deben ser tomados p
 
 En el siguiente ejemplo, hemos usado un conjunto de datos (data) creados por ejecuciones experimentales (referencia de investigación), de manera que cuando se obtienen los datos, ya habrá experimentado un preprocesamiento que no se cubrirá en ninguno de los ejemplos. Sin embargo, en ambos casos los datos se obtendrán utilizando los siguientes comandos:
 
-subject = 1 <br/>
+```subject = 1 <br/>
 runs = [3] <br/>
 tmin = -0.1 <br/>
 tmax = 0.3 <br/>
 raw_fnames = eegbci.load_data(subject,runs) <br/>
 raw_files = [read_raw_edf(f, preload=True) for f in raw_fnames] <br/>
 raw = concatenate_raws(raw_files) <br/>
-raw.ch_names.index('STI 014') <br/>
+raw.ch_names.index('STI 014') <br/>```
 
 Este código de arriba puede separarse en dos componentes. Los parámetros de las líneas 1 a la 4 definen qué partes del set de datos han de ser analizados, mientras que las líneas 5 a la 8 extraen los datos y conectan lo que cada línea hace (¿Qué hacen esas líneas?)
 Línea 2 es relevante en este ejemplo, ya que hay 14 ejecuciones experimentales para elegir de aquellas que se realizaron en este estudio y cada una fue probada bajo diferentes condiciones. En este experimento, la ejecución 3 midió la señal EEG obtenida durante el movimiento de las manos izquierda y derecha, ambas de forma separada y simultáneamente. 
@@ -69,9 +69,9 @@ El preprocesamiento es un paso crítico al analizar los datos de EEG. Los datos 
 
 Epoching consiste en dividir datos en segmentos de data basados en una ventana de tiempo de interés. El interés es generalmente determinado por un evento, sea un evento evocado o un evento inducido. (¿Tenemos un segmento de información que explore epoching más a fondo?). Para epoch tus datos, puedes seguir los siguientes pasos:
 
-events = mne.find_events(raw, stim_channel='STI 014', verbose=True) <br/>
+```events = mne.find_events(raw, stim_channel='STI 014', verbose=True) <br/>
 picks = pick_types)raw.info, meg=Fale, eeg=True, stim=False, eog=False, exclude='bas') <br/>
-baseline = 0, None <br/>
+baseline = 0, None <br/>```
 
 Estas líneas (arriba) definen los eventos que vas a buscar, como también el tipo de señal tu programa debiera analizar (MEG vs. EEG vs. EOG). Seleccionamos eeg=True ya que los datos apuntarán hacia donde fueron obtenidos usando un equipo (“headset”) EEG. Abajo, continuamos las entradas (inputs) necesarias para el “epoching”. 
 
