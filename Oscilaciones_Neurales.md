@@ -18,25 +18,25 @@ No sabemos todavía por qué nuestro cerebro produce oscilaciones neurales. Algu
 
 # ¿Por qué son importantes las ondas neurales? 
 Las oscilaciones neurales son útiles en varias formas. Desde un punto de vista de diagnóstico e imagen, pueden ser usadas como indicadores de fenómenos neurológicos específicos, tales como: 
-* 	Sueño y el estado de conciencia
+* Sueño y el estado de conciencia
 *	Control motor
 *	Procesamiento de la percepción e información.
 *	Generación de patrones. 
 *	Memoria.
 *	Función neural anormal, como epilepsia y Parkinson. 
 
-Aplicaciones prácticas para extraer oscilaciones neurales usando tu propio BCI podría ser observar la presencia de ondas mu cuando realizamos movimientos, o confirmar si ondas alfa y beta están presentes en estados de meditación. Podrías incluso querer observar todas las ondas diferentes que ocurren cuando estás ejecutando una tarea específica.
+Algunas aplicaciones prácticas para extraer oscilaciones neurales usando tu propio BCI podría ser observar la presencia de ondas mu cuando realizamos movimientos, o confirmar si ondas alfa y beta están presentes en estados de meditación. Podrías incluso observar las diferentes ondas  que ocurren cuando estás realizando una tarea específica.
 
 # ¿Cómo extraemos oscilaciones neurales como una característica de nuestros datos de EEG?
 
 <img scr="https://github.com/NeuroTechX/eeg-101/blob/dano-dev/EEG101/src/assets/wavedecomposition.gif" alt="This will display an animated GIF" />
 
-Como mencionamos antes, los datos obtenidos por EEG son capturados como función del tiempo, pero las oscilaciones neurales están descritas en unidades de frecuencia. Para transformar datos, necesitamos emplear transformadas de Fourier. 
-La transformada de Fourier es una fórmula pilar para el procesamiento de señales y descomposición de señales. Si quisieras aprender más acerca de las transformada de Fourier y FFT, recomendamos este video (https://www.youtube.com/watch?v=FjmwwDHT98c). Es un poco largo, ¡pero vale la pena verlo!
+Como mencionamos antes, los datos obtenidos por EEG son capturados como funciones de tiempo, pero las oscilaciones neurales están descritas en unidades de frecuencia. Para transformar datos, necesitamos emplear transformadas de Fourier. 
+La transformada de Fourier es una fórmula pilar para el procesamiento de señales y descomposición de señales. Si quisieras aprender más sobre las transformada de Fourier y FFT, recomendamos este video (https://www.youtube.com/watch?v=FjmwwDHT98c). Es un poco largo, ¡pero vale la pena verlo!
 
 <img src="eeg-101/EEG101/src/assets/wavedecomposition.gif" alt="This will display an animated GIF" />
 
-La mejor manera de extraer oscilaciones neurales es realizar una transformada de Fourier en tus datos preprocesada y luego graficar los patrones de frecuencias resultantes en la categoría de ondas cerebrales que te interesan. Puedes preprocesar aún más tus datos para excluir ciertos canales, o apuntar a rangos de frecuencia específicas para observar características de la oscilación neural. >Lee en NeuroTechX.edu la lección titualada “preprocesamiento” para tener una idea detallada sobre los pasos de pre-procesamiento que pueden ser aplicados a tus datos. 
+La mejor manera de extraer oscilaciones neurales es realizar una transformada de Fourier en tus datos preprocesados y luego graficar los patrones de frecuencias resultantes en la categoría de ondas cerebrales que te interesan. Puedes preprocesar aún más tus datos para excluir ciertos canales, o apuntar a rangos de frecuencia específica para observar las características de la oscilación neural. >Lee en NeuroTechX.edu la lección titualada “preprocesamiento” para tener una idea detallada sobre los pasos de preprocesamiento que pueden ser aplicados a tus datos. 
 
 Antes de extraer oscilaciones neurales, hay varios pasos que deben ser tomados para preparar tus datos:
 *	Importar datos, leer datos, formatear datos.
@@ -59,11 +59,11 @@ raw = concatenate_raws(raw_files) <br/>
 raw.ch_names.index('STI 014') <br/>
 ```
 Este código de arriba puede separarse en dos componentes. Los parámetros de las líneas 1 a la 4 definen qué partes del set de datos han de ser analizados, mientras que las líneas 5 a la 8 extraen los datos y conectan lo que cada línea hace (¿Qué hacen esas líneas?)
-Línea 2 es relevante en este ejemplo, ya que hay 14 ejecuciones experimentales para elegir de aquellas que se realizaron en este estudio y cada una fue probada bajo diferentes condiciones. En este experimento, la ejecución 3 midió la señal EEG obtenida durante el movimiento de las manos izquierda y derecha, ambas de forma separada y simultáneamente. 
+Línea 2 es relevante en este ejemplo, ya que hay 14 ejecuciones experimentales para elegir de aquellas que se realizaron en este estudio, y cada una fue probada bajo diferentes condiciones. En este experimento, la ejecución 3 midió la señal EEG obtenida durante el movimiento de las manos izquierda y derecha, ambas de forma separada y simultáneamente. 
 
 ### Preprocesamiento.
 
-El preprocesamiento es un paso crítico al analizar los datos de EEG. Los datos de EEG contienen mucho ruido y datos que no son relevantes para lo que estás intentando visualizar. El preprocesamiento es un tema profundo y hay muchas maneras de limpiar los datos de EEG. Consulta nuestra publicación sobre preprocesamiento aquí. Al graficar la densidad espectral de potencia (PSD, siglas en inglés), solo es necesario el “epoching” ya que queremos ver el PSD en todo el rango de frecuencia disponible. Sin embargo, para el gráfico de “topomap” deberás preprocesar tus datos con un filtro de paso de banda para aislar el rango de frecuencia específico que deseas visualizar. El siguiente ejemplo también elimina los nombres de los canales de sus claves predeterminadas "." para evitar errores al leer los nombres de tus canales.
+El preprocesamiento es un paso crítico al analizar los datos de EEG. Los datos de EEG contienen mucho ruido y datos que no son relevantes para lo que estás intentando visualizar. El preprocesamiento es un tema profundo y hay muchas maneras de limpiar los datos de EEG. Consulta nuestra publicación sobre preprocesamiento aquí. Al graficar la densidad espectral de potencia (PSD, siglas en inglés), solo es necesario el “epoching” ya que queremos ver el PSD en todo el rango de frecuencia disponible. Sin embargo, para el gráfico de “topomapa” deberás preprocesar tus datos con un filtro de paso de banda para aislar el rango de frecuencia específico que deseas visualizar. El siguiente ejemplo también elimina los nombres de los canales de sus claves predeterminadas "." para evitar errores al leer los nombres de tus canales.
 
 ### Epoching los datos.
 
@@ -114,3 +114,6 @@ __Figura 3:__ Topomapa de ondas alfa (7.5 – 12.5 Hz) durante movimiento.
 <img src="https://github.com/jfrayshe/learn.neurotechedu.com/blob/gh-pages/images/neurosc/beta.png">
  
 __Figura 4:__ Topomapa de ondas beta (13 - 30 Hz) durante movimiento. 
+
+
+Translated by Diego Garrido-Mendoza.
